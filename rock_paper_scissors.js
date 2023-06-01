@@ -1,3 +1,15 @@
+const buttons = document.querySelectorAll("button")
+const playerResult = document.querySelector("div.player-result")
+const computerResult = document.querySelector("div.computer-result")
+let userCount = 0;
+let computerCount = 0;
+
+
+buttons.forEach(
+    button => button.addEventListener("click", playRound)
+)
+
+
 function getComputerChoice () {
     let computerChoice;
     let random_number = Math.floor((Math.random() * 3) + 1);
@@ -15,17 +27,12 @@ function getComputerChoice () {
     return computerChoice
 }
 
-function getUsersResponse () {
-    let userChoice = prompt("What is your Choice");
-    if (userChoice == "rock" || userChoice == "paper" || userChoice == "scissors") {
-        return userChoice;
-    } else {
-        console.log("Wrong choice, you would have to pick between 'Rock', 'Paper' or 'Scissors'....")
-        return getUsersResponse()
-    }
-}
 
-function playRound (playerSelection, computerSelection) {
+function playRound (event) {
+    let playerSelection = event.target.textContent.toLowerCase();
+    let computerSelection = getComputerChoice()
+    console.log(playerSelection)
+    console.log(computerSelection)
     let winner;
     if (playerSelection == "rock") {
         if (computerSelection == "scissors") {
@@ -55,34 +62,29 @@ function playRound (playerSelection, computerSelection) {
         }
     }
 
-    return winner;
+    return gameEngine(winner);
 }
 
-function gameEngine () {
-    let userCount = 0;
-    let computerCount = 0;
-    for (let i=1; i<= 5; i++) {
-        computerPlays = getComputerChoice();
-        playerPlays = getUsersResponse();
-        verdict = playRound(playerPlays, computerPlays)
-        if (verdict == "player") {
-            userCount += 1;
-            console.log(`You won this round, ${playerPlays} beats ${computerPlays}`);
-        } else if (verdict == "computer") {
-            computerCount += 1;
-            console.log(`You lose this round, ${playerPlays} loses to ${computerPlays}`);
-        } else {
-            console.log(`It is a tie in this round, you both played ${playerPlays}`);
-        }
+function gameEngine (winner) {
+    // Increasing the counts of each player
+    if (winner == "draw") {
+        return
+    }
+    else if (winner == "player") {
+        userCount += 1;
+        playerResult.textContent = `Player: ${userCount}`;
+    } else if (winner = "computer") {
+        computerCount += 1;
+        computerResult.textContent = `Computer: ${computerCount}`;
     }
 
-    if (userCount > computerCount) {
-        console.log("You Win 🥳🥳🥳🥳🥳");
-    } else if (userCount < computerCount) {
-        console.log("You Lose 😥😥😥😥😥");
-    } else {
-        console.log("IT WAS A DRAW AFTER ALL IS SAID AND DONE");
+    // First player to five
+    if (userCount == 5 || computerCount ==5) {
+        let playerWon = userCount == 5 ? true: false;
+        userCount = 0;
+        computerCount = 0;
+        computerResult.textContent = `Computer: ${computerCount}`;
+        playerResult.textContent = `Player: ${userCount}`;
+        return  playerWon ? alert("You Win") : alert("You Lose");
     }
 }
-
-gameEngine()

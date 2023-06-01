@@ -4,9 +4,43 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Rock Paper Scissors</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family:Verdana, Geneva, Tahoma, sans-serif;
+            text-align: center;
+        }
+
+        button {
+            font-size: 1.3em;
+            padding: 10px;
+        }
+
+        .results {
+            width: 500px;
+            display: flex;
+            margin: 20px auto;
+        }
+
+        .results div {
+            flex: 1;
+            font-size: 2em;
+        }
+    </style>
 </head>
 <body>
-    <script src="./rock_paper_scissors.js"></script>
+    <h1>Rock Paper Scissors</h1>
+    <div class="player-choices">
+        <button class="choice">Rock</button>
+        <button class="choice">Paper</button>
+        <button class="choice">Scissors</button>
+    </div>
+    <div class="results">
+        <div class="player-result">Player: 0</div>
+        <div class="computer-result">Computer: 0</div>
+    </div>
+    <script src="./trial.js"></script>
 </body>
 </html>
